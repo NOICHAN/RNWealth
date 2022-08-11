@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div class="col-12 col-md-5 d-flex flex-column
-            justify-content-center align-items-center">
+              align-items-center account">
                 <div class="card mb-3" style="width: 18rem;"
                 v-for="item in accountList" :key="item.id">
                     <img src="" class="card-img-top" alt="">
@@ -113,6 +113,9 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+    .account {
+      height: calc(100vh - 64px - 102.4px);
     }
 </style>
 
