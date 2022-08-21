@@ -268,7 +268,6 @@ const recalculateAccountAmount = async (item) => {
 const delDataRecalculateAccountAmount = async (item) => {
   try {
     const account = accountList.value.find((element) => element.title === item.account);
-    console.log(item);
     if (item.category === 'income') {
       account.currentMoney -= item.money;
     } else {
@@ -284,53 +283,61 @@ const delDataRecalculateAccountAmount = async (item) => {
 };
 
 const toggleDate = async (num) => {
-  const surface = {
-    1: '31',
-    2: '28',
-    3: '31',
-    4: '30',
-    5: '31',
-    6: '30',
-    7: '31',
-    8: '31',
-    9: '30',
-    10: '31',
-    11: '30',
-    12: '31',
-  };
-  const beforeDate = { ...date.value };
-  beforeDate.month = parseInt(beforeDate.month, 10);
-  beforeDate.day = parseInt(beforeDate.day, 10);
-  beforeDate.day += num;
-  if (beforeDate.day > surface[beforeDate.month]) {
-    beforeDate.day = '01';
-    beforeDate.month += 1;
-    if (beforeDate.month > 12) {
-      beforeDate.year += 1;
-      beforeDate.month = '01';
+  try {
+    const surface = {
+      1: '31',
+      2: '28',
+      3: '31',
+      4: '30',
+      5: '31',
+      6: '30',
+      7: '31',
+      8: '31',
+      9: '30',
+      10: '31',
+      11: '30',
+      12: '31',
+    };
+    isLoading.value = true;
+    const beforeDate = { ...date.value };
+    beforeDate.month = parseInt(beforeDate.month, 10);
+    beforeDate.day = parseInt(beforeDate.day, 10);
+    beforeDate.day += num;
+    if (beforeDate.day > surface[beforeDate.month]) {
       beforeDate.day = '01';
+      beforeDate.month += 1;
+      if (beforeDate.month > 12) {
+        beforeDate.year += 1;
+        beforeDate.month = '01';
+        beforeDate.day = '01';
+      }
+    } else if (beforeDate.day < 1) {
+      beforeDate.month -= 1;
+      beforeDate.day = surface[beforeDate.month];
+      if (beforeDate.month < 1) {
+        beforeDate.year -= 1;
+        beforeDate.month = '12';
+        beforeDate.day = '31';
+      }
     }
-  } else if (beforeDate.day < 1) {
-    beforeDate.month -= 1;
-    beforeDate.day = surface[beforeDate.month];
-    if (beforeDate.month < 1) {
-      beforeDate.year -= 1;
-      beforeDate.month = '12';
-      beforeDate.day = '31';
+    if (beforeDate.month < 10 && typeof (beforeDate.month) === 'number') {
+      beforeDate.month = `0${beforeDate.month}`;
+    } else if (typeof (beforeDate.month) === 'number') {
+      beforeDate.month = beforeDate.month.toString();
     }
+    if (beforeDate.day < 10 && typeof (beforeDate.day) === 'number') {
+      beforeDate.day = `0${beforeDate.day}`;
+    } else if (typeof (beforeDate.day) === 'number') {
+      beforeDate.day = beforeDate.day.toString();
+    }
+    date.value = beforeDate;
+    await getBalanceSheet();
+  } catch (error) {
+    errorHandler(swal.fire);
+    throw new Error(`[toggleDate] error : ${error.message}`);
+  } finally {
+    isLoading.value = false;
   }
-  if (beforeDate.month < 10 && typeof (beforeDate.month) === 'number') {
-    beforeDate.month = `0${beforeDate.month}`;
-  } else if (typeof (beforeDate.month) === 'number') {
-    beforeDate.month = beforeDate.month.toString();
-  }
-  if (beforeDate.day < 10 && typeof (beforeDate.day) === 'number') {
-    beforeDate.day = `0${beforeDate.day}`;
-  } else if (typeof (beforeDate.day) === 'number') {
-    beforeDate.day = beforeDate.day.toString();
-  }
-  date.value = beforeDate;
-  await getBalanceSheet();
 };
 
 const updateBalanceSheet = async (item) => {
@@ -444,7 +451,6 @@ const showDeleteModal = (item) => {
 
 const deleteBalanceSheetData = async (item) => {
   try {
-    isLoading.value = true;
     await axios.delete(`balance-sheet/${propsData.value.id}`);
     await getBalanceSheet();
     await delDataRecalculateAccountAmount(item);
@@ -452,7 +458,6 @@ const deleteBalanceSheetData = async (item) => {
     errorHandler(swal.fire);
     throw new Error(`[deleteBalanceSheetData] error : ${error.message}`);
   } finally {
-    isLoading.value = false;
     DeleteRef.value.hideDeleteModal();
   }
 };
