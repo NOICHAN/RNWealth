@@ -20,13 +20,16 @@
             @click="showAccountModal(true)">新增帳戶</button>
         </div>
         <strong v-if="!monthlyAllocation.isEnable" class="fs-5 text-danger">尚未啟用每月自動匯入收入功能</strong>
-        <strong v-else class="fs-3">每月
-          <span>{{ monthlyAllocation.date }}</span>日自動匯入
-          <span>${{ $filters.currency(monthlyAllocation.fixedIncome) }}</span></strong>
-        <div class="row py-5 border-bottom border-success">
+        <strong v-else class="fs-3">每月<span class="text-secondary">
+          {{ monthlyAllocation.date }}</span>
+        日自動匯入
+          <span class="text-secondary">
+            ${{ $filters.currency(monthlyAllocation.fixedIncome) }}</span>
+        </strong>
+        <div class="row py-5 border-bottom border-success gy-3">
             <div class="col-12 col-md-6 col-xl-4"
             v-for="item in accountList" :key="item.id">
-                <div class="card d-flex me-auto ms-auto mb-3"
+                <div class="card d-flex me-auto ms-auto mb-3 shadowCard"
                 style="width: 18rem;">
                 <img src="" class="card-img-top" alt="">
                 <div class="card-body">
@@ -46,7 +49,7 @@
                       <button type="button" class="border-0 bg-transparent px-2"
                       @click="showAccountModal(false, item)">
                             <font-awesome-icon icon="fa-solid fa-pen-to-square"
-                                    class="text-primary fs-3" />
+                                    class="fs-3 iconColor" />
                         </button>
                         <button type="button" class="border-0 bg-transparent px-2"
                         @click="showDeleteModal(item, 'account')">
@@ -59,19 +62,19 @@
           </div>
         </div>
         <h2 class="my-5">管理收支項目</h2>
-        <div class="row justify-content-around">
-            <div class="col-8 col-md-4 d-flex flex-column mb-5">
-                <button type="button" class="btn btn-primary mb-3"
+        <div class="row justify-content-around gy-3 pb-5">
+            <div class="col-10 col-md-4 d-flex flex-column">
+                <button type="button" class="btn btn-success mb-3"
                 @click="showIncomeItemModal(true)">新增收入項目
                 </button>
-                <ul class="project">
+                <ul class="project py-3">
                     <li class="d-flex justify-content-around mb-2"
                     v-for="item in incomeItemList" :key="item.id">
                         <p class="fs-3">{{ item.title }}</p>
                         <button type="button" class="border-0 bg-transparent px-2"
                         @click="showIncomeItemModal(false, item)">
                             <font-awesome-icon icon="fa-solid fa-pen-to-square"
-                                    class="text-primary fs-3" />
+                                    class="fs-3 text-success" />
                         </button>
                         <button type="button" class="border-0 bg-transparent px-2"
                         @click="showDeleteModal(item, 'incomeItem')">
@@ -81,18 +84,18 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-8 col-md-4 d-flex flex-column">
-                <button type="button" class="btn btn-danger mb-3"
+            <div class="col-10 col-md-4 d-flex flex-column">
+                <button type="button" class="btn btn-info mb-3"
                 @click="showExpenditureItemModal(true)">新增支出項目
                 </button>
-                <ul class="project">
+                <ul class="project py-3">
                     <li class="d-flex justify-content-around mb-2"
                     v-for="item in expenditureItemList" :key="item.id">
                         <p class="fs-3">{{ item.title }}</p>
                         <button type="button" class="border-0 bg-transparent px-2"
                         @click="showExpenditureItemModal(false, item)">
                             <font-awesome-icon icon="fa-solid fa-pen-to-square"
-                                    class="text-primary fs-3" />
+                                    class="fs-3 text-info" />
                         </button>
                         <button type="button" class="border-0 bg-transparent px-2"
                         @click="showDeleteModal(item, 'expenditure')">
@@ -111,8 +114,16 @@
         margin-bottom: 0;
     }
     .project {
-        border: 1px solid rgba(0, 0, 0, 0.125);
         padding-left: 0;
+        box-shadow: 0px 3px 6px #00000029;
+        border-radius: 0.25rem;
+    }
+    .iconColor {
+      color: #66B3FF;
+    }
+    .shadowCard {
+      box-shadow: 0px 3px 6px #00000029;
+      border: none;
     }
 </style>
 

@@ -3,30 +3,33 @@
     data-bs-backdrop="static" data-bs-keyboard="false"
     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" ref="modal">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content bg-danger">
+    <div class="modal-content background">
       <div class="modal-header justify-content-center border-0">
-        <h5 class="modal-title" id="staticBackdropLabel">支出</h5>
+        <h5 class="modal-title fw-bold text-info h3" id="staticBackdropLabel">支出</h5>
       </div>
       <v-form v-slot="{ errors }" @submit="updateExpenditure">
       <div class="modal-body">
-        <v-field type="number" class="form-control d-block w-100 mb-2 text-end text-primary"
+        <v-field type="number"
+        class="form-control d-block w-100 mb-2 text-end text-info fw-bold borderColor"
         value="0" name="金額" rules="required" :class="{ 'is-invalid': errors['金額'] }"
         v-model="expenditure.money"></v-field>
         <error-message class="invalid-feedback" name="金額">
         </error-message>
-        <v-field type="date" class="form-control d-block w-100 mb-2 text-end"
+        <v-field type="date"
+        class="form-control d-block w-100 mb-2 text-end text-info fw-bold borderColor"
         name="日期" rules="required" :class="{ 'is-invalid': errors['日期'] }"
         v-model="date"></v-field>
         <error-message class="invalid-feedback" name="日期">
         </error-message>
         <div class="d-flex justify-content-between align-items-center mb-2">
           <p class="me-3 fs-5">項目</p>
-          <v-field class="form-select w-75" aria-label="Default select example"
+          <v-field class="form-select w-75 text-info fw-bold borderColor"
+          aria-label="Default select example"
           as="select" value="請選擇項目"
           name="項目" rules="required" :class="{ 'is-invalid': errors['項目'] }"
           v-model="expenditure.item">
           <option value="請選擇項目" disabled>請選擇項目</option>
-           <option v-for="item in expenditureItem" :key="item.id"
+           <option class="fw-bold" v-for="item in expenditureItem" :key="item.id"
             :value="item.title">{{ item.title }}</option>
           </v-field>
         </div>
@@ -34,12 +37,13 @@
         </error-message>
         <div class="d-flex justify-content-between align-items-center mb-2">
           <p class="me-3 fs-5">帳戶</p>
-          <v-field class="form-select w-75" aria-label="Default select example"
+          <v-field class="form-select w-75 text-info fw-bold borderColor"
+          aria-label="Default select example"
           as="select" value="請選擇帳戶"
           name="帳戶" rules="required" :class="{ 'is-invalid': errors['帳戶'] }"
           v-model="expenditure.account">
           <option value="請選擇帳戶" disabled>請選擇帳戶</option>
-          <option v-for="item in account" :key="item.id"
+          <option class="fw-bold" v-for="item in account" :key="item.id"
             :value="item.title">{{ item.title }}</option>
           </v-field>
         </div>
@@ -47,14 +51,15 @@
           </error-message>
         <div class="d-flex justify-content-between align-items-center">
           <p class="me-3 fs-5">備註</p>
-          <textarea class="form-control w-75" id="exampleFormControlTextarea1" rows="3"
+          <textarea class="form-control w-75 text-info fw-bold borderColor"
+          id="exampleFormControlTextarea1" rows="3"
           v-model="expenditure.content"></textarea>
         </div>
       </div>
       <div class="modal-footer justify-content-around border-0">
-        <button type="button" class="btn btn-outline-secondary w-25"
+        <button type="button" class="btn btn-outline-dark w-25"
         data-bs-dismiss="modal">取消</button>
-        <button type="submit" class="btn btn-primary w-25">儲存</button>
+        <button type="submit" class="btn btn-outline-info w-25">儲存</button>
       </div>
     </v-form>
     </div>
@@ -62,7 +67,7 @@
 </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
  p {
   margin-bottom: 0;
  }
@@ -73,6 +78,13 @@
 }
 input[type=number] {
   -moz-appearance: textfield;
+}
+.background {
+  background: #FFD0FF;
+  border: 4px solid #FF77FF;
+}
+.borderColor {
+  border: 3px solid #FF77FF;
 }
 </style>
 

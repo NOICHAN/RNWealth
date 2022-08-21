@@ -3,26 +3,30 @@
     data-bs-backdrop="static" data-bs-keyboard="false"
     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" ref="modal">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content bg-info">
+    <div class="modal-content background">
       <div class="modal-header justify-content-center border-0">
-        <h5 class="modal-title" id="staticBackdropLabel">刪除</h5>
+        <h5 class="modal-title text-danger fw-bold h3" id="staticBackdropLabel">刪除</h5>
       </div>
       <div class="modal-body">
-        確認刪除{{ deleteDataItem.title }}，刪除後無法復原。
+        確認刪除 <strong class="text-danger">{{ deleteDataItem.title }}</strong> ，刪除後無法復原。
       </div>
       <div class="modal-footer justify-content-around border-0">
-        <button type="button" class="btn btn-outline-secondary w-25"
+        <button type="button" class="btn btn-outline-dark w-25"
         data-bs-dismiss="modal">取消</button>
-        <button type="submit" class="btn btn-primary w-25" @click="deleteData">刪除</button>
+        <button type="submit" class="btn btn-outline-danger w-25" @click="deleteData">刪除</button>
       </div>
     </div>
   </div>
 </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
  p {
   margin-bottom: 0;
+ }
+ .background {
+  background: #FF9797;
+  border: 3px solid #dc3545;
  }
 </style>
 

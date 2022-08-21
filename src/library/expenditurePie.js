@@ -20,25 +20,25 @@ const incomePie = (element) => {
   const setOption = (data) => {
     const option = {
       color: [
-        '#4DFFFF',
-        '#46A3FF',
-        '#D3A4FF',
-        '#7D7DFF',
-        '#28FF28',
-        '#00E3E3',
-        '#9F35FF',
-        '#2828FF',
-        '#B15BFF',
-        '#00DB00',
-        '#6F00D2',
+        '#FFAD86',
+        '#FFBFFF',
+        '#FFED97',
+        '#FF95CA',
+        '#FF8040',
+        '#F9F900',
+        '#FF44FF',
+        '#F75000',
+        '#FFD306',
+        '#FF0080',
+        '#FF0000',
       ],
       title: {
-        text: '本月無任何收入',
+        text: '本月無任何支出',
         top: 'center',
         left: 'center',
         textStyle: {
           fontSize: 30,
-          color: '#dc3545',
+          color: '#00DB00',
         },
       },
       tooltip: {
@@ -89,8 +89,9 @@ const incomePie = (element) => {
     if (data.data.length !== 0) {
       option.series[0].data = data.data;
       option.title.text = data.total;
-      option.title.textStyle.color = '#00DB00';
+      option.title.textStyle.color = '#dc3545';
     }
+
     return myChart.setOption(option);
   };
   const resize = () => myChart.resize();

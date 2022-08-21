@@ -9,12 +9,12 @@
 @deleteData="deleteBalanceSheetData"></DeleteModal>
     <div class="container my-5 py-5">
         <div class="row flex-column flex-md-row
-        align-items-center align-items-md-start gy-5">
-            <div class="col-12 col-md-7">
+        align-items-center align-items-md-start gy-5 gx-3">
+            <div class="col-md-7">
                 <div class="mb-5 d-flex justify-content-around align-items-center">
-                    <button type="button" class="btn btn-primary"
+                    <button type="button" class="btn btn-success"
                     @click="showIncomeModal(true,'income')">新增收入</button>
-                    <button type="button" class="btn btn-danger"
+                    <button type="button" class="btn btn-info"
                     @click="showExpenditureModal(true,'expenditure')">新增支出</button>
                 </div>
                 <div class="text-center detail">
@@ -23,7 +23,7 @@
                         @click="toggleDate(-1)">
                             <font-awesome-icon icon="fa-solid fa-angle-left" />
                         </button>
-                        <h2><span>{{ date.year }}/{{ date.month }}/{{ date.day }}</span> 收支表 :</h2>
+                        <h2><span>{{ date.year }}/{{ date.month }}/{{ date.day }}</span> 收支表</h2>
                         <button type="button" class="border-0 bg-transparent"
                         @click="toggleDate(1)">
                             <font-awesome-icon icon="fa-solid fa-angle-right" />
@@ -33,35 +33,35 @@
                     <table class="table" v-else>
                       <thead>
                         <tr>
-                          <th>時間</th>
+                          <th class="d-none d-sm-table-cell">時間</th>
                           <th>帳戶</th>
                           <th>項目</th>
                           <th>金額</th>
-                          <th>編輯/刪除</th>
+                          <th class="text-nowrap">編輯/刪除</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr class="border-transparent"
                         v-for="item in balanceSheetList" :key="item.id">
-                          <td class="text-nowrap">{{ item.time }}</td>
+                          <td class="text-nowrap d-none d-sm-table-cell">{{ item.time }}</td>
                           <td class="balanceSheetList">{{ item.account }}</td>
                           <td class="balanceSheetList">{{ item.item }}</td>
-                          <td class="text-end pe-0 pe-lg-5 text-nowrap"
-                          :class="{'text-primary': item.category === 'income',
-                            'text-danger': item.category === 'expenditure'}">
+                          <td class="text-end fs-5 pe-0 pe-lg-5 text-nowrap fw-bold"
+                          :class="{'text-success': item.category === 'income',
+                            'text-info': item.category === 'expenditure'}">
                             $ {{ $filters.currency(item.money) }}</td>
                           <td class="text-nowrap">
                             <button type="button" class="border-0 bg-transparent px-1 px-lg-2 me-2"
                             v-if="item.category === 'income'"
                             @click="showIncomeModal(false,'income',item)">
                               <font-awesome-icon icon="fa-solid fa-pen-to-square"
-                                    class="text-primary fs-3" />
+                                    class="text-success fs-3" />
                             </button>
                             <button type="button" class="border-0 bg-transparent px-1 px-lg-2 me-2"
                             v-else
                             @click="showExpenditureModal(false,'expenditure',item)">
                               <font-awesome-icon icon="fa-solid fa-pen-to-square"
-                                    class="text-primary fs-3" />
+                                    class="text-info fs-3" />
                             </button>
                               <button type="button" class="border-0 bg-transparent px-1 px-lg-2"
                                 @click="showDeleteModal(item)">
@@ -74,18 +74,16 @@
                     </table>
                 </div>
             </div>
-            <div class="col-12 col-md-5 d-flex flex-column
-              align-items-center account">
-                <div class="card mb-3" style="width: 18rem;"
+            <div class="col-md-5 d-flex flex-column
+              align-items-center">
+                <div class="card mb-3 shadowCard" style="width: 15rem;"
                 v-for="item in accountList" :key="item.id">
-                    <img src="" class="card-img-top" alt="">
                     <div class="card-body">
                         <h3>{{ item.title }}</h3>
                         <p class="card-text">${{ $filters.currency(item.currentMoney) }}</p>
                     </div>
                 </div>
-                <div class="card mb-3" style="width: 18rem;">
-                    <img src="" class="card-img-top" alt="">
+                <div class="card mb-3 shadowCard" style="width: 15rem;">
                     <div class="card-body">
                         <h3>總計</h3>
                         <p class="card-text">${{ $filters.currency(totalAssets) }}</p>
@@ -105,7 +103,7 @@
       tbody tr {
         border-color: transparent;
         &:hover {
-          background: #b7dbfa;
+          background: #e9ecef;
         }
       }
     }
@@ -114,8 +112,12 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .account {
-      height: calc(100vh - 64px - 102.4px);
+    .shadowCard {
+      box-shadow: 0px 3px 6px #00000029;
+      border: none;
+    }
+    .card:hover {
+      background: #e9ecef;
     }
 </style>
 
@@ -136,6 +138,7 @@ const swal = inject('$swal');
 const isLoading = ref(false);
 const isNew = ref(true);
 const propsData = ref({});
+let monthlyAllocation = {};
 let beforePropsData = {};
 let userId = null;
 
@@ -163,7 +166,6 @@ const getTodayDate = () => {
 
 const getAllAccount = async () => {
   try {
-    isLoading.value = true;
     const config = {
       params: {
         userId,
@@ -174,14 +176,11 @@ const getAllAccount = async () => {
   } catch (error) {
     errorHandler(swal.fire);
     throw new Error(`[getAllAccount] error : ${error.message}`);
-  } finally {
-    isLoading.value = false;
   }
 };
 
 const getAllIncomeItem = async () => {
   try {
-    isLoading.value = true;
     const config = {
       params: {
         userId,
@@ -192,14 +191,11 @@ const getAllIncomeItem = async () => {
   } catch (error) {
     errorHandler(swal.fire);
     throw new Error(`[getAllIncomeItem] error : ${error.message}`);
-  } finally {
-    isLoading.value = false;
   }
 };
 
 const getAllExpenditureItem = async () => {
   try {
-    isLoading.value = true;
     const config = {
       params: {
         userId,
@@ -210,14 +206,11 @@ const getAllExpenditureItem = async () => {
   } catch (error) {
     errorHandler(swal.fire);
     throw new Error(`[getAllExpenditureItem] error : ${error.message}`);
-  } finally {
-    isLoading.value = false;
   }
 };
 
 const getBalanceSheet = async () => {
   try {
-    isLoading.value = true;
     const config = {
       params: {
         userId,
@@ -231,12 +224,21 @@ const getBalanceSheet = async () => {
   } catch (error) {
     errorHandler(swal.fire);
     throw new Error(`[getBalanceSheet] error : ${error.message}`);
-  } finally {
-    isLoading.value = false;
   }
 };
 
+const getMonthlyAllocation = async () => {
+  const config = {
+    params: {
+      userId,
+    },
+  };
+  const { data } = await axios.get('monthly-allocation', config);
+  [monthlyAllocation] = data;
+};
+
 const getTotalAssets = () => {
+  totalAssets.value = 0;
   for (let i = 0; i < accountList.value.length; i += 1) {
     totalAssets.value += accountList.value[i].currentMoney;
   }
@@ -257,7 +259,6 @@ const recalculateAccountAmount = async (item) => {
     }
     await axios.put(`account/${account.id}`, account);
     await getAllAccount();
-    totalAssets.value = 0;
     getTotalAssets();
   } catch (error) {
     throw new Error(`[recalculateAccountAmount] error : ${error.message}`);
@@ -267,7 +268,12 @@ const recalculateAccountAmount = async (item) => {
 const delDataRecalculateAccountAmount = async (item) => {
   try {
     const account = accountList.value.find((element) => element.title === item.account);
-    account.currentMoney -= item.money;
+    console.log(item);
+    if (item.category === 'income') {
+      account.currentMoney -= item.money;
+    } else {
+      account.currentMoney += item.money;
+    }
     await axios.put(`account/${account.id}`, account);
     await getAllAccount();
     totalAssets.value = 0;
@@ -329,7 +335,6 @@ const toggleDate = async (num) => {
 
 const updateBalanceSheet = async (item) => {
   try {
-    isLoading.value = true;
     let httpMethod = 'post';
     let incomeItemUrl = 'balance-sheet';
 
@@ -340,16 +345,61 @@ const updateBalanceSheet = async (item) => {
     await axios[httpMethod](incomeItemUrl, item);
     await recalculateAccountAmount(item);
     await getBalanceSheet();
-    await getAllAccount();
   } catch (error) {
     errorHandler(swal.fire);
     throw new Error(`[updateBalanceSheet] error : ${error.message}`);
   } finally {
-    isLoading.value = false;
     beforePropsData = {};
     propsData.value = {};
     incomeModalRef.value.hideIncomeModal();
     ExpenditureModalRef.value.hideExpenditureModal();
+  }
+};
+
+const automaticAllocation = async () => {
+  try {
+    isLoading.value = true;
+    const today = new Date();
+    const day = today.getUTCDate();
+    if (!monthlyAllocation.isEnable || day < monthlyAllocation.date) {
+      return;
+    }
+    const config = {
+      params: {
+        userId,
+        year: date.value.year,
+        month: date.value.month,
+        day: monthlyAllocation.date,
+      },
+    };
+    let balanceSheetData = await Api.getBalanceSheet(config);
+    balanceSheetData = balanceSheetData.find((item) => item.isAutomaticImport);
+    if (balanceSheetData) return;
+    isNew.value = true;
+    for (let i = 0; i < accountList.value.length; i += 1) {
+      if (accountList.value[i].monthlyAllocation !== 0) {
+        const allocatingData = {
+          userId,
+          category: 'income',
+          year: date.value.year,
+          month: date.value.month,
+          day: monthlyAllocation.date,
+          money: accountList.value[i].monthlyAllocation,
+          item: '薪資',
+          account: accountList.value[i].title,
+          time: '00:00',
+          title: `自動匯入 00:00 ${accountList.value[i].title} 薪資 ${accountList.value[i].monthlyAllocation}`,
+          isAutomaticImport: 1,
+        };
+        // eslint-disable-next-line no-await-in-loop
+        await updateBalanceSheet(allocatingData);
+      }
+    }
+  } catch (error) {
+    errorHandler(swal.fire);
+    throw new Error(`[automaticAllocation] error : ${error.message}`);
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -413,6 +463,7 @@ const initial = async () => {
     getAllAccount(),
     getAllIncomeItem(),
     getAllExpenditureItem(),
+    getMonthlyAllocation(),
   ]);
 };
 
@@ -422,6 +473,7 @@ onMounted(async () => {
   getTodayDate();
   await initial();
   getTotalAssets();
+  await automaticAllocation();
 });
 
 </script>
