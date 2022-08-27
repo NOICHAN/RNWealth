@@ -89,7 +89,7 @@ const incomePie = (element) => {
     if (data.data.length !== 0) {
       option.series[0].data = data.data;
       option.title.text = data.total;
-      option.title.textStyle.color = '#dc3545';
+      option.title.textStyle.color = '#FF77FF';
     }
 
     return myChart.setOption(option);

@@ -38,7 +38,7 @@ const incomePie = (element) => {
         left: 'center',
         textStyle: {
           fontSize: 30,
-          color: '#dc3545',
+          color: '#FF77FF',
         },
       },
       tooltip: {

@@ -7,29 +7,38 @@
 :expenditureItem="expenditureItemList" @updateExpenditure="updateBalanceSheet"></ExpenditureModal>
 <DeleteModal ref="DeleteRef" :deleteDataItem="propsData"
 @deleteData="deleteBalanceSheetData"></DeleteModal>
-    <div class="container my-5 py-5">
+<div class="bg-primary bg-opacity-25">
+  <div class="container py-5">
         <div class="row flex-column flex-md-row
         align-items-center align-items-md-start gy-5 gx-3">
             <div class="col-md-7">
                 <div class="mb-5 d-flex justify-content-around align-items-center">
-                    <button type="button" class="btn btn-success"
-                    @click="showIncomeModal(true,'income')">新增收入</button>
-                    <button type="button" class="btn btn-info"
-                    @click="showExpenditureModal(true,'expenditure')">新增支出</button>
+                    <button type="button" class="btn incomeBtn py-3"
+                    @click="showIncomeModal(true,'income')">
+                    <font-awesome-icon icon="fa-solid fa-circle-dollar-to-slot" class="fs-1" />
+                    <p class="mb-0 fw-bold fs-5">新增收入</p>
+                    </button>
+                    <button type="button" class="btn expenditureBtn py-3"
+                    @click="showExpenditureModal(true,'expenditure')">
+                    <font-awesome-icon icon="fa-solid fa-money-bill-trend-up" class="fs-1" />
+                    <p class="mb-0 fw-bold fs-5">新增支出</p>
+                    </button>
                 </div>
                 <div class="text-center detail">
                     <div class="d-flex justify-content-around align-items-center">
-                        <button type="button" class="border-0 bg-transparent"
+                        <button type="button" class="btn arrow"
                         @click="toggleDate(-1)">
-                            <font-awesome-icon icon="fa-solid fa-angle-left" />
+                            <font-awesome-icon icon="fa-solid fa-angle-left" class="fs-3" />
                         </button>
-                        <h2><span>{{ date.year }}/{{ date.month }}/{{ date.day }}</span> 收支表</h2>
-                        <button type="button" class="border-0 bg-transparent"
+                        <h2>
+                          <span>{{ date.year }}/{{ date.month }}/{{ date.day }}</span> 收支表</h2>
+                        <button type="button" class="border-0 bg-transparent arrow"
                         @click="toggleDate(1)">
-                            <font-awesome-icon icon="fa-solid fa-angle-right" />
+                            <font-awesome-icon icon="fa-solid fa-angle-right" class="fs-3" />
                         </button>
                     </div>
-                    <p class="h1 my-5" v-if="balanceSheetList.length === 0">今日尚未有任何資料。</p>
+                    <p class="h1 my-5 text-danger"
+                    v-if="balanceSheetList.length === 0">今日尚未有任何資料。</p>
                     <table class="table" v-else>
                       <thead>
                         <tr>
@@ -92,6 +101,7 @@
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <style lang="scss" scoped>
@@ -117,7 +127,24 @@
       border: none;
     }
     .card:hover {
-      background: #e9ecef;
+      background: #fcf7ee;
+    }
+    .incomeBtn {
+      color: #FF8040;
+      &:hover {
+        color: #00DB00;
+      }
+    }
+    .expenditureBtn {
+      color: #FF8040;
+      &:hover {
+        color: #FF77FF;
+      }
+    }
+    .arrow {
+      &:hover {
+        color: #F2542D;
+      }
     }
 </style>
 

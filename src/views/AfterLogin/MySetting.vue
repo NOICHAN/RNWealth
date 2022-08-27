@@ -11,10 +11,13 @@
 @updateExpenditureItem="updateExpenditureItem"></ExpenditureItemModal>
 <DeleteModal ref="DeleteRef" :deleteDataItem="propsData"
 @deleteData="deleteData"></DeleteModal>
-    <div class="container">
-        <h2 class="my-5">管理帳戶</h2>
-        <div class="d-flex justify-content-between mb-5">
-            <button type="button" class="btn btn-primary"
+<div class="bg-primary bg-opacity-25">
+  <div class="container py-5">
+        <h2 class="mb-5">
+          <font-awesome-icon icon="fa-solid fa-file-invoice-dollar" />
+          管理帳戶</h2>
+        <div class="mb-5">
+            <button type="button" class="btn btn-primary me-5"
             @click="showMonthlyAllocationModal">每月分配設定</button>
             <button type="button" class="btn btn-primary"
             @click="showAccountModal(true)">新增帳戶</button>
@@ -26,7 +29,7 @@
           <span class="text-secondary">
             ${{ $filters.currency(monthlyAllocation.fixedIncome) }}</span>
         </strong>
-        <div class="row py-5 border-bottom border-success gy-3">
+        <div class="row py-5 border-bottom border-dark gy-3">
             <div class="col-12 col-md-6 col-xl-4"
             v-for="item in accountList" :key="item.id">
                 <div class="card d-flex me-auto ms-auto mb-3 shadowCard"
@@ -61,8 +64,10 @@
             </div>
           </div>
         </div>
-        <h2 class="my-5">管理收支項目</h2>
-        <div class="row justify-content-around gy-3 pb-5">
+        <h2 class="my-5">
+          <font-awesome-icon icon="fa-solid fa-list-check" />
+          管理收支項目</h2>
+        <div class="row justify-content-around gy-3">
             <div class="col-10 col-md-4 d-flex flex-column">
                 <button type="button" class="btn btn-success mb-3"
                 @click="showIncomeItemModal(true)">新增收入項目
@@ -107,6 +112,7 @@
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <style lang="scss" scoped>
@@ -124,6 +130,9 @@
     .shadowCard {
       box-shadow: 0px 3px 6px #00000029;
       border: none;
+    }
+    .card:hover {
+      background: #fcf7ee;
     }
 </style>
 

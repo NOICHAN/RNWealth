@@ -1,57 +1,59 @@
 <template>
 <VLoading :active="isLoading"></VLoading>
-    <div class="container my-5">
+<div class="bg-primary bg-opacity-25">
+  <div class="container-xl py-5">
         <div class="row justify-content-center gy-5">
             <div class="col-10 col-md-6">
                 <div class="d-flex justify-content-around align-items-center">
-                    <button type="button" class="border-0 bg-transparent"
+                    <button type="button" class="border-0 bg-transparent arrow"
                     @click="toggleMonth(-1, incomeDate)">
-                        <font-awesome-icon icon="fa-solid fa-angle-left" />
+                        <font-awesome-icon icon="fa-solid fa-angle-left" class="fs-3" />
                     </button>
                     <h2>{{ incomeDate.year }}年<span>{{ incomeDate.month }}</span>月
-                    <span class="text-primary ms-3">收入</span></h2>
-                    <button type="button" class="border-0 bg-transparent"
+                    <span class="text-success ms-3">收入</span></h2>
+                    <button type="button" class="border-0 bg-transparent arrow"
                     @click="toggleMonth(1, incomeDate)">
-                        <font-awesome-icon icon="fa-solid fa-angle-right" />
+                        <font-awesome-icon icon="fa-solid fa-angle-right" class="fs-3" />
                     </button>
                 </div>
                 <div class="Chart mb-5">
                     <div ref="incomePieDom" class="ChartContainer"></div>
                 </div>
-                <ul>
-                    <li class="d-flex justify-content-around mb-3"
+                <ul class="px-0 px-md-5">
+                    <li class="d-flex justify-content-between mb-3 fs-5 fw-bold"
                     v-for="(item, index) in incomeData.data" :key="index">
                         <p>{{ item.name }} (<span>{{ item.percent }}</span>%)</p>
-                        <p>${{ $filters.currency(item.value) }}</p>
+                        <p class="text-success">${{ $filters.currency(item.value) }}</p>
                     </li>
                 </ul>
             </div>
             <div class="col-10 col-md-6">
                 <div class="d-flex justify-content-around align-items-center">
-                    <button type="button" class="border-0 bg-transparent"
+                    <button type="button" class="border-0 bg-transparent arrow"
                     @click="toggleMonth(-1, expenditureDate)">
-                        <font-awesome-icon icon="fa-solid fa-angle-left" />
+                        <font-awesome-icon icon="fa-solid fa-angle-left" class="fs-3" />
                     </button>
                     <h2>{{ expenditureDate.year }}年<span>{{ expenditureDate.month }}</span>月
-                    <span class="text-danger ms-3">支出</span></h2>
-                    <button type="button" class="border-0 bg-transparent"
+                    <span class="text-info ms-3">支出</span></h2>
+                    <button type="button" class="border-0 bg-transparent arrow"
                     @click="toggleMonth(1, expenditureDate)">
-                        <font-awesome-icon icon="fa-solid fa-angle-right" />
+                        <font-awesome-icon icon="fa-solid fa-angle-right" class="fs-3" />
                     </button>
                 </div>
                 <div class="Chart mb-5">
                     <div ref="expenditurePieDom" class="ChartContainer"></div>
                 </div>
-                <ul>
-                    <li class="d-flex justify-content-around mb-3"
+                <ul class="px-0 px-md-5">
+                    <li class="d-flex justify-content-between mb-3 fs-5 fw-bold"
                     v-for="(item, index) in expenditureData.data" :key="index">
                         <p>{{ item.name }} (<span>{{ item.percent }}</span>%)</p>
-                        <p>${{ $filters.currency(item.value) }}</p>
+                        <p class="text-info">${{ $filters.currency(item.value) }}</p>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <style lang="scss" scoped>
@@ -66,11 +68,16 @@
     }
     .Chart {
         width: 100%;
-        height: 500px;
+        height: 400px;
     }
     .ChartContainer {
         width: 100%;
         height: 100%;
+    }
+    .arrow {
+      &:hover {
+        color: #F2542D;
+      }
     }
 </style>
 
