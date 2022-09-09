@@ -7,7 +7,7 @@
 :expenditureItem="expenditureItemList" @updateExpenditure="updateBalanceSheet"></ExpenditureModal>
 <DeleteModal ref="DeleteRef" :deleteDataItem="propsData"
 @deleteData="deleteBalanceSheetData"></DeleteModal>
-<div class="bg-primary bg-opacity-25">
+<div class="bg-primary bg-opacity-25 vh">
   <div class="container py-5">
         <div class="row flex-column flex-md-row
         align-items-center align-items-md-start gy-5 gx-3">
@@ -145,6 +145,9 @@
       &:hover {
         color: #F2542D;
       }
+    }
+    .vh {
+      min-height: calc(100vh - 64px - 102.4px);
     }
 </style>
 
