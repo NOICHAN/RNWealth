@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkrn_wealth"]=self["webpackChunkrn_wealth"]||[]).push([[785],{5785:function(n,r,s){s.r(r),s.d(r,{default:function(){return h}});var e=s(3396);const t={class:"text-center"},a=(0,e._)("h1",{class:"display-3"},"404",-1),c=(0,e._)("p",{class:"display-5"},"sorry，這一頁找不到囉~",-1),l=[a,c];function u(n,r){return(0,e.wg)(),(0,e.iD)("div",t,l)}var i=s(89);const d={},f=(0,i.Z)(d,[["render",u]]);var h=f}}]);
+//# sourceMappingURL=785.ff9cb69d.js.map
