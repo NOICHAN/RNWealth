@@ -182,7 +182,8 @@ const totalAssets = ref(0);
 const getTodayDate = () => {
   const today = new Date();
   let month = today.getMonth() + 1;
-  let day = today.getUTCDate();
+  let day = today.getDate();
+  console.log(day);
   if (month < 10) {
     month = `0${month}`;
   }
@@ -397,7 +398,7 @@ const automaticAllocation = async () => {
   try {
     isLoading.value = true;
     const today = new Date();
-    const day = today.getUTCDate();
+    const day = today.getDate();
     if (!monthlyAllocation.isEnable || day < monthlyAllocation.date) {
       return;
     }
