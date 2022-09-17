@@ -21,7 +21,7 @@
         <div class="col-10 col-md-4 col-lg-3 text-center card align-items-center">
             <img src="@/assets/images/Frame-3.png" alt="收支圖表分析" class="my-3">
             <h3>收支圖表分析</h3>
-            <p>運用圖表分析讓您更容易了解自身財務狀況隨時隨地都可以檢視收支狀</p>
+            <p>運用圖表分析讓您更容易了解自身財務狀況隨時隨地都可以檢視收支</p>
         </div>
     </div>
     <div class="row mb-5 justify-content-center justify-content-md-between knowledge gy-4
